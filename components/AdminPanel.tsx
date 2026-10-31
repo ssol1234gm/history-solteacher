@@ -46,10 +46,17 @@ export default function AdminPanel({
 
   async function logout() {
     setLoading(true);
-    await fetch("/api/admin/logout", { method: "POST" });
-    setLoading(false);
-    onAuthChanged(false, "관리자 모드를 종료했습니다.");
-    onClose();
+    setError("");
+    try {
+      const response = await fetch("/api/admin/logout", { method: "POST" });
+      if (!response.ok) throw new Error("로그아웃하지 못했습니다.");
+      onAuthChanged(false, "관리자 모드를 종료했습니다.");
+      onClose();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "로그아웃하지 못했습니다.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function deleteAll() {
@@ -71,7 +78,7 @@ export default function AdminPanel({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold tracking-[0.18em] text-sky-600">
-              MINDLET ADMIN
+              history-solmi ADMIN
             </p>
             <h2 className="mt-1 text-xl font-semibold">관리자 패널</h2>
           </div>

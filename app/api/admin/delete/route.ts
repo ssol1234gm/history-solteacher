@@ -22,8 +22,8 @@ export async function POST(request: Request) {
     if (error) throw error;
 
     return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error("POST /api/admin/delete", error);
+  } catch {
+    console.error("POST /api/admin/delete");
     return NextResponse.json(
       { error: "메모를 강제 삭제하지 못했습니다." },
       { status: 500 },

@@ -39,8 +39,8 @@ export async function POST(request: Request) {
 
     if (error) throw error;
     return NextResponse.json({ memo: data }, { status: 201 });
-  } catch (error) {
-    console.error("POST /api/memos", error);
+  } catch {
+    console.error("POST /api/memos");
     return NextResponse.json(
       { error: "메모를 저장하지 못했습니다." },
       { status: 500 },
